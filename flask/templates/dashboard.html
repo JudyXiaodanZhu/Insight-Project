@@ -1,0 +1,66 @@
+{% extends "index.html" %}
+{% block title %}Dashboard {% endblock %}
+{% block head %}
+  {{ super() }}
+ <style>
+#customers {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+#customers td, #customers th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#customers th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #666666;
+    color: white;
+}
+
+</style>
+{% endblock %}
+{% block content %}
+    <!-- Page Content -->
+    <div class="container"> 
+      <br><br><br>
+      <div class="row text-center text-lg-left">
+      <br>
+        <hr>
+      <form action="/call" method="post">
+          <button class="btn btn-info" style="background-color:#E33737", name="forwardBtn" type="submit">Start Streaming</button>
+      </form>
+    </div>
+    </div>
+    <div id="pageTable" class="container">
+      <div class="row text-center text-lg-left">
+          <br><br>
+          <h2>Alerts</h2>
+           <hr>
+            <!--<h5>Data results</h5> -->
+               <table id="customers">
+              <thead>
+                {% for h in header %}
+                <th>{{ h }}</th>
+                {% endfor %}
+              </thead>
+              {% for row in data %}
+              <tr>
+                {% for element in row %}
+                <td>{{ element }} </td>
+                {% endfor %}
+              </tr>
+              {% endfor %}
+          </table>
+        <br>
+    </div>
+      </div>
+    
+    <!-- /.container -->
+
+{% endblock %}
+
+

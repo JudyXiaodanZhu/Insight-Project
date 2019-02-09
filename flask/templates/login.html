@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% block title %}Login{% endblock %}
+{% block head %}
+  {{ super() }}
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/login.css') }}">
+{% endblock %}
+{% block content %}
+    <header class="intro-header">
+    <div class="container">
+        <br>
+        {% with messages = get_flashed_messages() %}
+         {% if messages %}
+               {% for message in messages %}
+               <p>{{ message }}</p>
+               {% endfor %}
+         {% endif %}
+      {% endwith %}
+        <div class="card card-container">
+            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+            <p id="profile-name" class="profile-name-card"></p>
+            <form id="login-form" class="form-signin" method="post" name="login">
+                <span id="reauth-email" class="reauth-email"></span>
+                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+            </form><!-- /form -->
+            {% for message in form.email.errors %}
+            <p style="color:black">{{ message }}</p>
+            {% endfor %}
+            {% for message in form.password.errors %}
+            <p style="color:black"> {{ message }}</p>
+            {% endfor %}
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+    </header>
+{% endblock %}

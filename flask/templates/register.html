@@ -1,0 +1,29 @@
+{% extends "index.html" %}
+{% block title %}Register{% endblock %}
+{% block head %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='./css/login.css') }}">
+{% endblock %}
+{% block content %}
+    <header class="intro-header">
+    <div class="container">
+        <div class="card card-container">
+            <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+            <p id="profile-name" class="profile-name-card"></p>
+            <form class="form-signin" action="" method="post">
+                <input type="text" id="inputEmail" class="form-control" name=email placeholder="Email address" required autofocus>
+                <input type="password" id="inputPassword" class="form-control" name=password placeholder="Password" required>
+                <input type="password" id="retypePassword" class="form-control" name=confirm placeholder="Retype Password" required>
+               <br>
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Register</button>
+            </form><!-- /form -->
+            {% for message in form.email.errors %}
+            <p style="color:black">{{ message }}</p>
+            {% endfor %}
+            {% for message in form.password.errors %}
+            <p style="color:black"> {{ message }}</p>
+            {% endfor %}
+        </div><!-- /card-container -->
+    </div><!-- /container -->
+    </header>
+{% endblock %}

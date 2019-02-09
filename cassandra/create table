@@ -1,0 +1,16 @@
+CREATE KEYSPACE ECG WITH replication = replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
+
+CREATE TABLE ECG.patient_stats (Record int PRIMARY KEY, Gender text, Age text, Weight text, Height text,  BSA text, BMI text,  Smoker text, SBP text, SBV text,  IMT text, MALVMi text, EF text, Vascular_event text);
+
+CREATE TABLE ecg_stream (
+    Record int,
+    day text,
+    ts timestamp,
+    message text,
+    primary key((Record, day), ts)
+) WITH CLUSTERING ORDER BY (ts DESC) 
+         AND COMPACTION = {'class': 'TimeWindowCompactionStrategy', 
+                       'compaction_window_unit': 'DAYS', 
+                       'compaction_window_size': 1};
+
+CREATE TABLE ECG.display(Record int PRIMARY KEY, Irregularity text, Gender text, Age text, Weight text, Height text,  BSA text, BMI text,  Smoker text, SBP text, SBV text,  IMT text, MALVMi text, EF text, Vascular_event text);

@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    {% block head %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>{% block title %}{% endblock %} </title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='./vendor/bootstrap/css/bootstrap.min.css') }}">
+
+    <!-- Custom fonts for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='./vendor/font-awesome/css/font-awesome.min.css') }}">
+
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='./css/landing-page.css') }}">
+    
+    {% endblock %}
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+      <div class="container">
+        {% if not current_user.is_authenticated %}
+          <a class="navbar-brand" href="/">ECG Monitoring</a>
+        {%else%}
+          <a class="navbar-brand" href="/dashboard">ECG Monitoring</a>
+        {%endif%}
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+              {% if current_user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link">Hi {{ current_user.email }}!
+              </a></li>
+              <li class="nav-item">
+              <a class="nav-link" href="/dashboard"> Dashboard
+              </a></li>
+            <li class="nav-item">
+                 <a class="nav-link" href="logout">Logout</a></li>
+            {% else %}
+          <li class="nav=item">
+              <a class="nav-link" href="login">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="register">Register</a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+{% block content %}
+    <!-- Header -->
+    <header class="intro-header">
+      <div class="container" style="text-align:left">
+        <div class="intro-message">
+          <h1>ECG Monitoring</h1>
+          <h3>Platform for real-time ECG</h3>
+          <h3> monitoring and alerting</h3>
+          <hr class="intro-divider" style="margin-left:0">
+          <ul class="list-inline intro-social-buttons">
+            <li class="list-inline-item">
+              <a href="login" class="btn btn-secondary btn-lg">
+                <i class="fa fa-sign-in fa-fw"></i>
+                <span class="network-name">Click Here to Log In</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- Page Content -->
+
+
+    </section>
+    <!-- /.content-section-b -->
+
+    <section class="content-section-a">
+
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-5 ml-auto">
+            <hr class="section-heading-spacer">
+            <div class="clearfix"></div>
+            <h2 class="section-heading"> Project dataset comes from:
+            <p class="lead">
+              <a target="_blank" href="https://www.kaggle.com/shayanfazeli/heartbeat">ECG Heartbeat Categorization Dataset</a> and
+              <a target="_blank" href="https://physionet.org/physiobank/database/shareedb/">Smart Health for Assessing the Risk of Events via ECG</a>.</p>
+          </div>
+          <div class="col-lg-5 mr-auto ">
+            <img class="img-fluid" src="{{ url_for('static', filename='./img/physionet.png') }}" alt="">
+          </div>
+        </div>
+
+      </div>
+      <!-- /.container -->
+
+    </section>
+    <!-- /.content-section-a -->
+
+    <aside class="banner">
+
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <p>This website is designed by Judy Zhu</p>
+            <h3>Contact Judy:</h3><br>
+
+                <a href="https://github.com/JudyXiaodanZhu/InsightProject" class="btn btn-secondary btn-lg">
+                  <i class="fa fa-github fa-fw"></i>
+                  <span class="network-name">Github</span>
+                </a>
+                <tab></tab>
+                <a href="https://www.linkedin.com/in/judy-zhu-51755473" class="btn btn-secondary btn-lg">
+                  <i class="fa fa-linkedin fa-fw"></i>
+                  <span class="network-name">Linkedin</span>
+                </a>
+             
+          </div>
+        </div>
+
+      </div>
+      <!-- /.container -->
+
+    </aside>
+    <!-- /.banner -->
+        <footer style="background-color: white">
+      <div class="container">
+        <ul class="list-inline">
+          <li class="list-inline-item">
+            <a href="/"></a>
+          </li>
+          <li class="list-inline-item">
+            <a href="http://www.cs.toronto.edu/~delara/courses/ece1779/#home"></a>
+          </li>
+        </ul>
+        </div>
+    </footer>
+    {% endblock %}
+    <!-- Footer -->
+
+
+    <!-- Bootstrap core JavaScript -->
+<script src="{{ url_for('static', filename='./js/lightbox-plus-jquery.min.js') }}"></script>
+<script src="{{ url_for('static', filename='./vendor/jquery/jquery.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='./vendor/popper/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='./vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.js"
+  integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+  crossorigin="anonymous"></script>
+<script>
+$(document).ready(function() {
+    setInterval("ajaxd()",5000); // call every 5 seconds
+});
+
+function ajaxd() { 
+  //reload result into element with id "pageTable"
+  //$("#pageTable").load("/dashboardtest");
+  $.get("/dashboardtest", function(data, status){
+    console.log(data.header);
+    console.log(data.data);
+    $('#customers').html('');
+    $('#customers').append("<tr>");
+    for (i in data.header){
+      $('#customers').append("<th>"+data.header[i]+"</th>");
+    };
+     $('#customers').append("</tr>");
+
+    for (i in data.data){
+      $('#customers').append("<tr>");
+      $('#customers').append("<td>"+data.data[i]['record']+"</td>")
+      $('#customers').append("<td>"+data.data[i]['irregularity']+"</td>")
+      for (j in data.data[i]){
+        if (j =='record'){
+          continue;
+        }
+        if (j =='irregularity'){
+          continue;
+        }
+         $('#customers').append("<td>"+data.data[i][j]+"</td>")
+        }
+        $('#customers').append("</tr>");
+      }
+  });
+    
+}
+</script>
+   
+  </body>
+
+</html>
