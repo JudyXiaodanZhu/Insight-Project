@@ -1,5 +1,5 @@
 # E-Monitor
-My project is a real-time ECG monitoring system for health-care providers to monitor their patient's live ECG results. 
+A real-time ECG monitoring system. 
 
 ## Practical Significance
 
