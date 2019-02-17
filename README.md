@@ -18,7 +18,7 @@ After analysing the above real-life use cases, the main goals for my project has
 
 ## Data pipeline
 ### Data Extraction
-The raw patient history data comes from the biggest public healthcare dataset in the U.S. It can be found here: https://physionet.org/physiobank/database/cves/. The historical patient data in about 100GB in size. \
+The raw patient history data comes from the biggest public healthcare dataset in the U.S. It can be found here: https://physionet.org/physiobank/database/cves/. The historical patient data in about 100GB in size. 
 
 To get the streaming data, I used a processed CSV data set from Kaggle, which can be found here: https://www.kaggle.com/shayanfazeli/heartbeat. The extraction step includes ingesting patient data directly into the db and putting to-be streamed data into S3. The streaming data is cleaned and combined together in 1 file so the size is large enough to stream for 30 seconds.
 
@@ -30,10 +30,12 @@ The data is stored in a Cassandra Time-Series database in 3 tables. One table is
 
 ## Challanges
 ### Data Ingestion
-The first challange faced is to send 300,000 records of data in real-time into the system. At first, using one producer and one consumer, only 100 records can be sent per second. After adding more user threads, changing batch size, compression type and linger.ms for the producers, Kafka can process 10,000/records/s.
+The first challange faced is to send 300,000 records of data in real-time into the system. At first, using one producer and one consumer, only 100 records can be sent per second. 
+
+After adding more user threads, changing batch size, compression type and linger.ms for the producers, Kafka producers can ingest 10,000/records/s.
 
 ### Db Schema Design
-
+Other than display problematic ECG data in real-time, another main use case for the data is to display 1-2 days of recent ECG records for healthcare providers to diagnose cardiac arrythmia. In a real-life scenario, the db may contain TBs of data per patient. Therefore, the schema must be designed in such a way so that the querying time is minimized. 
 
 ## Tech stack choices
 After carefulling considering the functional requirements and constrains, I designed the following data pipeline for my project:
