@@ -30,7 +30,7 @@ The data is stored in a Cassandra Time-Series database in 3 tables. One table is
 
 ## Challanges
 ### Data Ingestion
-The first challange faced is to send 300,000 records of data in real-time into the system. At first, using one producer and one consumer, only 100 records can be sent per second. 
+The first challange faced is to send 300,000 records of data in real-time into the system. At first, using one producer and one consumer, only 2000 records can be sent per second. 
 
 After adding more user threads, changing batch size, compression type and linger.ms for the producers, Kafka producers can ingest 10,000 records/s.
 
