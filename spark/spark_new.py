@@ -28,8 +28,8 @@ def save_to_db(db):
     timestamp = datetime.datetime.now()
     Record = int(db[0])
     message = np.array_str(db)
-    print message
-    print "== begin save tbl2 ======"
+    
+    print "== begin saving to db =="
     cassandra_cluster = Cluster(config.cass_cluster_IP)
     cassandra_session = cassandra_cluster.connect('ecg')
     flow = cassandra_session.prepare('''INSERT INTO ecg_stream(Record, day, ts, message)  VALUES (?,?,?,?)''')
@@ -40,16 +40,16 @@ def save_to_db(db):
         pass
     cassandra_session.execute(batch)
     cassandra_cluster.shutdown()
-    print "== end save tbl2 ======"
 
 
 def display(rdd):
     '''
-        function used to save to cassandra database 
+        save display data to cassandra database 
     '''
     ma = {0.0: 'Normal beat', 1.0: 'Supraventricular premature beat', 2.0: 'Premature ventricular contraction',
 3.0: 'Fusion of ventricular and normal beat', 4.0: 'Unclassifiable beat'}
-    print "== begin save tbl1 ======"
+
+    print "== begin saving to db =="
     cassandra_cluster = Cluster(config.cass_cluster_IP)
     cassandra_session = cassandra_cluster.connect('ecg')
     
@@ -57,7 +57,6 @@ def display(rdd):
                                                       VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                                                    ''')
     re = ()
-    print rdd
     df = cassandra_session.execute('Select * from patient_stats where record='+str(rdd[0]))
     for row in df:
         re += ma.get(rdd[1],0.0),
@@ -71,12 +70,11 @@ def display(rdd):
         pass
     cassandra_session.execute(batch)
     cassandra_cluster.shutdown()
-    print "== end save tbl1 ======"
+  
     
-def sparkfilternew(x):
+def sparkDeserialize(x):
     '''
-        function used to query a broadcasted hash-table to get background 
-        option transaction volume and compare with streaming data
+        function used to deserialize np array
     '''
     try:
         x = np_from_json(x,"original")
@@ -85,9 +83,7 @@ def sparkfilternew(x):
     return x
 
 def np_from_json(obj, prefix_name):
-    """Deserialize numpy.ndarray obj
-    :param prefix_name: unique name for this array.
-    :param obj: numpy.ndarray"""
+    """ Deserialize numpy.ndarray obj """
     return np.frombuffer(base64.b64decode(obj["{}_frame".format(prefix_name)].encode("utf-8")),
                          dtype=np.dtype(obj["{}_dtype".format(prefix_name)])).reshape(
         obj["{}_shape".format(prefix_name)])
@@ -99,7 +95,6 @@ conf = SparkConf().setAppName("PythonStreamingDirectKafka")\
              .set("spark.streaming.backpressure.enabled", "true") \
              .set("spark.streaming.backpressure.initialRate", "1500")
 sc = SparkContext(conf=conf)
-#sc = SparkContext(appName="PythonStreamingDirectKafka")
 ssc = StreamingContext(sc, 5)
 
 conf = SparkConf()
@@ -115,7 +110,7 @@ df = sqlContext.read\
 
 rddtest = df.rdd.map(list)
 coll = rddtest.collect()
-print "Elements in RDD -> %s" % (coll)
+
 list_3 = list()
 for d in rddtest.collect():
     list_3.append(d)
@@ -128,7 +123,7 @@ kvs = KafkaUtils.createDirectStream(ssc, config.kafka_topic,
                                         {"metadata.broker.list": config.bootstrap_servers_ipaddress})
 line = kvs.map(lambda x:x[1])
 parsed_msg = line.map(lambda x: json.loads(x))
-lines = parsed_msg.map(sparkfilternew)
+lines = parsed_msg.map(sparkDeserialize)
 
 join = lines.filter(lambda x: x[-1] != 0.0)
 dis = join.map(lambda x: (int(x[0]), x[-1]))

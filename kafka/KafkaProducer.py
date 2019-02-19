@@ -9,9 +9,7 @@ from sys import getsizeof
 
 
 def main():
-    ##############################
-    # load pre-defined settings
-    ##############################
+    # load settings
     S3_KEY = config.S3_KEY
     S3_SECRET = config.S3_SECRET
     S3_BUCKET = config.S3_BUCKET

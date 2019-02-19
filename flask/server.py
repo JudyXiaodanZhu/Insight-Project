@@ -22,6 +22,8 @@ import pandas as pd
 from datetime import date, datetime
 import numpy as np
 import json
+
+
 # initialize the app, thumbnail, db and s3
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
@@ -169,11 +171,11 @@ def search_file():
             graph = process_result(results)
     return render_template("search.html", trace1_data=graph)
 
+
 def process_result(result):
-    
     df_tbl_1 = pd.DataFrame(list(result))
     res = []
-    print df_tbl_1['message']
+    
     for num in df_tbl_1['message']:
         num = num.encode('utf-8').split(' ')
         for number in num:
@@ -187,8 +189,9 @@ def process_result(result):
             name="re",
             type='lines',
             )
-    print trace1
+   
     return json.dumps(trace1, cls=plotly.utils.PlotlyJSONEncoder)
+
 
 def isfloat(value):
   try:
@@ -196,6 +199,7 @@ def isfloat(value):
     return True
   except ValueError:
     return False
+
 
 @login_manager.user_loader
 def user_loader(user_id):
