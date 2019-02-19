@@ -25,21 +25,26 @@
 {% endblock %}
 {% block content %}
     <!-- Page Content -->
+    <meta http-equiv="refresh" content="2" />
     <div class="container"> 
       <br><br><br>
       <div class="row text-center text-lg-left">
       <br>
         <hr>
       <form action="/call" method="post">
-          <button class="btn btn-info" style="background-color:#E33737", name="forwardBtn" type="submit">Start Streaming</button>
+          <button class="btn btn-info" name="forwardBtn" type="submit">Start Streaming</button>
       </form>
+      <br>
     </div>
     </div>
     <div id="pageTable" class="container">
       <div class="row text-center text-lg-left">
           <br><br>
-          <h2>Alerts</h2>
-           <hr>
+          <h2>Top 10 Alerts</h2>
+         <br>
+         <hr>
+         <h4 id="pending"> Pending Requests: {{pending}} </h4>
+          
             <!--<h5>Data results</h5> -->
                <table id="customers">
               <thead>

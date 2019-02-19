@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% block title %} Search {% endblock %}
+{% block head %}
+  {{ super() }}
+ <link rel="stylesheet" href="{{ url_for('static', filename='./css/thumbnail.css') }}">
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+
+      <h3 class="my-4 text-center text-lg-left">Find Patient</h3>
+        <form id="formSearch" class = "form-signin" method="post" action="/search">
+       Patient ID &nbsp; <input type="string" name="userID"><br/><br/>
+       Date From &nbsp; <input type="string" name="DateFrom"><br /><br/>
+       Date To &nbsp; &nbsp; &nbsp; &nbsp; <input type="string" name="DateTo"><br /><br/>
+   <button class="btn btn-info" name="submitBtn" type="submit"> Search </button>
+    </form>
+    <hr></hr>
+        <div class="doc-output">
+        <h3>Patient data</h3>
+        <div id="myDiv"></div>
+    </div>
+
+    </div>
+
+{% endblock %}

@@ -12,8 +12,16 @@ from werkzeug.utils import secure_filename
 from cassandra.cluster import Cluster
 import config
 import subprocess
-
-
+from itertools import product
+from cassandra.concurrent import execute_concurrent_with_args
+import plotly
+import plotly.plotly as py
+import plotly.tools as tls
+import plotly.graph_objs as go
+import pandas as pd
+from datetime import date, datetime
+import numpy as np
+import json
 # initialize the app, thumbnail, db and s3
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
@@ -90,7 +98,7 @@ def logout():
 def home():
     """Displays the data."""
 
-    cql_str1 = '''SELECT * FROM display''' 
+    cql_str1 = '''SELECT * FROM display LIMIT 10''' 
     df_tbl_1 = list(session.execute(cql_str1))
     for i in range(len(df_tbl_1)):
         temp = (str(df_tbl_1[i][0]),)
@@ -100,7 +108,13 @@ def home():
             temp +=  df_tbl_1[i][j],
         df_tbl_1[i] = temp
     header = ['Patient Id', 'Irregularity', 'Age',  'BMI', 'BSA', 'EF',  'Gender', 'Height', 'IMT', 'MALVMi','SBP', 'SBV', 'Smoker', 'Vascular_event','Weight']
-    return render_template('dashboard.html', header=header, data=df_tbl_1)
+    
+    cql_str2 = '''SELECT count(*) as count FROM display''' 
+    df_tbl_2 = list(session.execute(cql_str2))
+    pending = ''
+    for i in range(len(df_tbl_2)):
+        pending = df_tbl_2[i][0]
+    return render_template('dashboard.html', header=header, data=df_tbl_1, pending=pending)
 
 
 @app.route('/dashboardtest')
@@ -108,11 +122,16 @@ def home():
 def test():
     """Displays the data."""
 
-    cql_str1 = '''SELECT * FROM display''' 
+    cql_str1 = '''SELECT * FROM display LIMIT 10''' 
     df_tbl_1 = list(session.execute(cql_str1))
     header = ['Patient Id', 'Irregularity', 'Age',  'BMI', 'BSA', 'EF',  'Gender', 'Height', 'IMT', 'MALVMi','SBP', 'SBV', 'Smoker', 'Vascular_event','Weight']
-    return jsonify(header=header, data=df_tbl_1)
+    cql_str2 = '''SELECT count(*) as count FROM display''' 
+    df_tbl_2 = list(session.execute(cql_str2))
+    pending = ''
+    for i in range(len(df_tbl_2)):
+        pending = df_tbl_2[i][0]
 
+    return jsonify(header=header, data=df_tbl_1, pending = pending)
 
 @app.route('/call', methods=['POST'])
 def call():
@@ -120,6 +139,63 @@ def call():
     print(response.returncode)
     return redirect(url_for('home'))
 
+@app.route('/search', methods=['GET', 'POST'])
+def search_file():
+    graph = []
+    """Search function."""
+    if request.method == 'POST':
+        user = int(request.form['userID'])
+        days = []
+        # datetime.strptime(request.form['DateFrom'], "%B %d, %Y").date()
+        if request.form['DateTo'] == request.form['DateFrom']:
+            days = [request.form['DateFrom'].encode('utf-8')]
+        else:
+            days = [request.form['DateFrom'].encode('utf-8'), request.form['DateTo'].encode('utf-8')]
+        prepared = session.prepare("Select message from ecg_stream where Record = ? and day = ? limit 10")
+        args = product([user], days)
+        for i in args:
+            print i
+        """
+        results = execute_concurrent_with_args(session, prepared, args)
+        for (success, result) in results:
+            if not success:
+                return render_template("search.html")
+            else:
+                if len(result.current_rows) > 0:
+                    graph = process_result(result)
+        """
+        results = session.execute(prepared, (user,days[0]))
+        if len(results.current_rows) > 0:
+            graph = process_result(results)
+    return render_template("search.html", trace1_data=graph)
+
+def process_result(result):
+    
+    df_tbl_1 = pd.DataFrame(list(result))
+    res = []
+    print df_tbl_1['message']
+    for num in df_tbl_1['message']:
+        num = num.encode('utf-8').split(' ')
+        for number in num:
+            if isfloat(number):
+                if float(number) < 1.0:
+                    res.append(float(number))
+    time = range(len(res))
+    trace1 = dict(
+            x= time,
+            y=res,
+            name="re",
+            type='lines',
+            )
+    print trace1
+    return json.dumps(trace1, cls=plotly.utils.PlotlyJSONEncoder)
+
+def isfloat(value):
+  try:
+    float(value)
+    return True
+  except ValueError:
+    return False
 
 @login_manager.user_loader
 def user_loader(user_id):

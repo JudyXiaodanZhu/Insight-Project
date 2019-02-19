@@ -20,7 +20,7 @@
 
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="{{ url_for('static', filename='./css/landing-page.css') }}">
-    
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     {% endblock %}
   </head>
 
@@ -44,7 +44,10 @@
               <a class="nav-link">Hi {{ current_user.email }}!
               </a></li>
               <li class="nav-item">
-              <a class="nav-link" href="/dashboard"> Dashboard
+              <a class="nav-link" href="/dashboard"> Alert Dashboard
+              </a></li>
+               <li class="nav-item">
+              <a class="nav-link" href="/search"> Find Patient
               </a></li>
             <li class="nav-item">
                  <a class="nav-link" href="logout">Logout</a></li>
@@ -158,7 +161,8 @@
     <!-- Bootstrap core JavaScript -->
 <script src="{{ url_for('static', filename='./js/lightbox-plus-jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='./vendor/jquery/jquery.min.js') }}"></script>
-
+<script src="https://d14fo0winaifog.cloudfront.net/plotly-basic.js"></script>
+   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <script src="{{ url_for('static', filename='./vendor/popper/popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='./vendor/bootstrap/js/bootstrap.min.js') }}"></script>
     <script
@@ -167,7 +171,7 @@
   crossorigin="anonymous"></script>
 <script>
 $(document).ready(function() {
-    setInterval("ajaxd()",5000); // call every 5 seconds
+    setInterval("ajaxd()",1000); // call every 5 seconds
 });
 
 function ajaxd() { 
@@ -176,6 +180,9 @@ function ajaxd() {
   $.get("/dashboardtest", function(data, status){
     console.log(data.header);
     console.log(data.data);
+   console.log(data.pending);
+   $('#pending').html('');
+   $('#pending').append('<h4> Pending Requests:'+data.pending+'</h4>');
     $('#customers').html('');
     $('#customers').append("<tr>");
     for (i in data.header){
@@ -201,6 +208,32 @@ function ajaxd() {
   });
     
 }
+
+var trace1 = {{trace1_data | safe}};
+        var layout = {
+              title: 'Irregular ECG Sample',
+              xaxis: {title: 'Sample Number',
+                titlefont: {
+                  size: 16
+                }, 
+                tickfont: {
+                  size: 14
+                }}, 
+              yaxis: {
+                title: 'Normalized Signal',
+                titlefont: {
+                  size: 16
+                }, 
+                tickfont: {
+                  size: 14
+                }
+              }, 
+              barmode: 'group', 
+              bargap: 0.15, 
+              bargroupgap: 0.1
+            };
+        var data = [trace1];
+        Plotly.newPlot('myDiv', data, layout);
 </script>
    
   </body>
