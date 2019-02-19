@@ -45,10 +45,10 @@ After carefulling considering the functional requirements and constrains, I desi
 4. Flask to present results in a dashboard
 
 ## Views
-![alt text](img/Img1.png "Screenshot of User Interface")
-![alt text](img/Img2.png "Screenshot of User Interface")
-![alt text](img/Img1.png "Screenshot of User Interface")
-![alt text](img/Img2.png "Screenshot of User Interface")
+![alt text](img/Img1 "Screenshot of User Interface")
+![alt text](img/Img2 "Screenshot of User Interface")
+![alt text](img/Img1 "Screenshot of User Interface")
+![alt text](img/Img2 "Screenshot of User Interface")
 
 
 | [DEMO Video]           | [DEMO Slides]  |
