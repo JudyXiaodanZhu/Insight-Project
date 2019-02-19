@@ -45,11 +45,11 @@ After carefulling considering the functional requirements and constrains, I desi
 4. Flask to present results in a dashboard
 
 ## Views
-### Login Page
+### 1. Login Page
 ![alt text](img/Img4 "Screenshot of User Interface")
-### Dashboard
+### 2. Dashboard
 ![alt text](img/Img2 "Screenshot of User Interface")
-### Retrieve Patient Record
+### 3. Retrieve Patient Record
 ![alt text](img/Img3 "Screenshot of User Interface")
 
 | [DEMO Video]           | [DEMO Slides]  |
