@@ -43,3 +43,17 @@ After carefulling considering the functional requirements and constrains, I desi
 2. Kafka and Spark Streaming to load and process data 
 3. Cassandra to store the raw and processed data 
 4. Flask to present results in a dashboard
+
+## Views
+### 1. Login Page
+![alt text](img/Img4 "Screenshot of User Interface")
+### 2. Dashboard
+![alt text](img/Img2 "Screenshot of User Interface")
+### 3. Query Patient ECG record
+![alt text](img/Img3 "Screenshot of User Interface")
+
+| [DEMO Video]           | [DEMO Slides]  |
+
+
+[DEMO Video]:<https://youtu.be/nL2yumruH-o>
+[DEMO Slides]:<https://docs.google.com/presentation/d/e/2PACX-1vRO2UyIR18tpK0jxu6RP6J7UH8nfY_SDs67coPfY5QwCcrlwK2YGFs5hI9PH5CLAZk1a-b3j0mzlDoM/pub?start=false&loop=false&delayms=3000>
