@@ -45,14 +45,13 @@ After carefulling considering the functional requirements and constrains, I desi
 4. Flask to present results in a dashboard
 
 ## Views
-![alt text](img/Img1 "Screenshot of User Interface")
 ![alt text](img/Img2 "Screenshot of User Interface")
-![alt text](img/Img1 "Screenshot of User Interface")
-![alt text](img/Img2 "Screenshot of User Interface")
+![alt text](img/Img3 "Screenshot of User Interface")
+![alt text](img/Img4 "Screenshot of User Interface")
 
 
 | [DEMO Video]           | [DEMO Slides]  |
-| ------------- |:-------------:| -----:|
+
 
 [DEMO Video]:<https://youtu.be/nL2yumruH-o>
 [DEMO Slides]:<https://docs.google.com/presentation/d/e/2PACX-1vRO2UyIR18tpK0jxu6RP6J7UH8nfY_SDs67coPfY5QwCcrlwK2YGFs5hI9PH5CLAZk1a-b3j0mzlDoM/pub?start=false&loop=false&delayms=3000>
