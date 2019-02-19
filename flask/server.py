@@ -148,7 +148,7 @@ def search_file():
     if request.method == 'POST':
         user = int(request.form['userID'])
         days = []
-        # datetime.strptime(request.form['DateFrom'], "%B %d, %Y").date()
+        
         if request.form['DateTo'] == request.form['DateFrom']:
             days = [request.form['DateFrom'].encode('utf-8')]
         else:
@@ -157,7 +157,7 @@ def search_file():
         args = product([user], days)
         for i in args:
             print i
-        """
+        graph = []
         results = execute_concurrent_with_args(session, prepared, args)
         for (success, result) in results:
             if not success:
@@ -169,6 +169,7 @@ def search_file():
         results = session.execute(prepared, (user,days[0]))
         if len(results.current_rows) > 0:
             graph = process_result(results)
+        """
     return render_template("search.html", trace1_data=graph)
 
 
