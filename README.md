@@ -49,7 +49,7 @@ After carefulling considering the functional requirements and constrains, I desi
 ![alt text](img/Img4 "Screenshot of User Interface")
 ### 2. Dashboard
 ![alt text](img/Img2 "Screenshot of User Interface")
-### 3. Retrieve Patient Record
+### 3. Query Patient ECG record
 ![alt text](img/Img3 "Screenshot of User Interface")
 
 | [DEMO Video]           | [DEMO Slides]  |
