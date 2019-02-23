@@ -40,7 +40,7 @@ Other than displaying irregular ECG data in real-time, another main use case for
 ## Tech stack choices
 After carefulling considering the functional requirements and constrains, I designed the following data pipeline for my project:
 1. S3 to store the simulated data
-2. Kafka and Spark Streaming to load and process data 
+2. Kafka and Spark Streaming to load and process data. 
 3. Cassandra to store the raw and processed data 
 4. Flask to present results in a dashboard
 
