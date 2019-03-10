@@ -55,5 +55,5 @@ After carefulling considering the functional requirements and constrains, I desi
 | [DEMO Video]           | [DEMO Slides]  |
 
 
-[DEMO Video]:<https://youtu.be/nL2yumruH-o>
+[DEMO Video]:<https://www.youtube.com/watch?v=06C8gheurqg>
 [DEMO Slides]:<https://docs.google.com/presentation/d/e/2PACX-1vRO2UyIR18tpK0jxu6RP6J7UH8nfY_SDs67coPfY5QwCcrlwK2YGFs5hI9PH5CLAZk1a-b3j0mzlDoM/pub?start=false&loop=false&delayms=3000>
