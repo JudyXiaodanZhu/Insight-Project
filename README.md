@@ -28,7 +28,7 @@ The main transformation for this project is to analyze the incoming data and fil
 ### Data Storage and Loading
 The data is stored in a Cassandra Time-Series database in 3 tables. One table is the patient information, one table is the raw data and the other is the displayed results. The WebUI listens to the results table and lists the irregular ECG data.
 
-## Challanges
+## Challenges
 ### Data Ingestion
 The first challange faced is to send 300,000 records of data in real-time into the system. At first, using one producer and one consumer, only 2000 records can be sent per second. 
 
